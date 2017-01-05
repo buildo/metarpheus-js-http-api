@@ -1,0 +1,9 @@
+node_modules
+test
+src
+.git
+.eslintrc
+.babelrc
+.drone.yml
+.gitignore
+.hophoprc
