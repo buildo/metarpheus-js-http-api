@@ -7,7 +7,7 @@ const __DEV = process.env.NODE_ENV !== 'production';
 
 const warn = message => {
   if (__DEV) {
-    console.warn(message); // eslint-disable-line no-console
+    console.warn(`HTTPAPI: ${message}`); // eslint-disable-line no-console
   }
 };
 
@@ -28,8 +28,6 @@ export default function HTTPAPI({
   apiEndpoint,
 
   timeout = 60000,
-
-  addCacheControlHeader = true,
 
   unwrapApiResponse = resp => resp && resp.data ? resp.data : null,
 
@@ -60,11 +58,10 @@ export default function HTTPAPI({
   // );
 
 }) {
-  // skip default transport response
-  const transformResponse = [];
+  const axiosInstance = axios.create();
+
   // we are deserializing here:
-  // TODO(gio): this is evil, avoid to globally mutate `interceptors`
-  axios.interceptors.response.use(
+  axiosInstance.interceptors.response.use(
     response => ({
       ...response,
       data: JSON.parse(response.data, (_, v) => {
@@ -135,26 +132,26 @@ export default function HTTPAPI({
         }
 
         // optionally add cache control headers
-        if (method === 'get' && addCacheControlHeader) {
+        if (method === 'get') {
           headers.Pragma = 'no-cache';
           headers['Cache-Control'] = 'no-cache, no-store';
         }
 
         if (__DEV && authenticated && !token) {
-          warn(`no token provided for authenticated ${method} ${url}`);
+          warn(`No token provided for authenticated ${method} ${url}`);
         }
 
         if (token) {
           headers.Authorization = `Token token="${token}"`;
         }
 
-        return axios({
+        return axiosInstance({
           method,
           url,
           params: queryParams,
           headers,
           data,
-          transformResponse,
+          transformResponse: [v => v], // skip default transform response
           timeout
         }).then(
           // TODO(gio): this is not under __DEV switch
@@ -171,7 +168,7 @@ export default function HTTPAPI({
 
   return impls.reduce((ac, { methodName, impl }) => {
     if (ac[methodName]) {
-      warn(`HTTPAPI: Overriding api method '${methodName}'`);
+      warn(`Overriding api method '${methodName}'`);
     }
     return { ...ac, [methodName]: impl };
   }, {});
