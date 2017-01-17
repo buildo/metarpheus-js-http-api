@@ -45,18 +45,6 @@ export default function HTTPAPI({
     return { status: err.status, errors };
   }
 
-  // TODO(gio): do we really need this?
-  // stringifyParam = value => t.match(value,
-  //   t.Str, v => v,
-  //   t.Date, v => v.toISOString(),
-  //   t.Bool, v => String(v),
-  //   t.Number, v => String(v),
-  //   t.Nil, () => undefined, // undefined (query) params are stripped by axios down the road
-  //   t.Any, () => {
-  //     throw new Error('Unhandled param type', value);
-  //   }
-  // );
-
 }) {
   const axiosInstance = axios.create();
 
@@ -112,21 +100,12 @@ export default function HTTPAPI({
           });
         }
 
-        // const query = Object.keys(qq).reduce((ac, k) => {
-        //   return {
-        //     ...ac,
-        //     [k]: stringifyParam(qq[k])
-        //   };
-        // }, {});
-
         const url = `${apiEndpoint}/${route(
           ...urlParams/*.map(stringifyParam)*/.map(encodeURIComponent)
         )}`;
 
         const headers = {};
 
-        // TODO(gio): not sure why but the automatically inferred Content-Type
-        // is omitted if providing a custom transformRequest
         if (['post', 'put', 'patch'].indexOf(method) !== -1) {
           headers['Content-Type'] = 'application/json';
         }
@@ -154,10 +133,6 @@ export default function HTTPAPI({
           transformResponse: [v => v], // skip default transform response
           timeout
         }).then(
-          // TODO(gio): this is not under __DEV switch
-          // - why? maybe because in general, instantiating structs could be needed even in prod
-          // - does it have perf impacts?
-          // TODO(gio): is `.fromAPI` used anywhere in our projects?
           ({ data }) => (returnType.fromAPI ? returnType.fromAPI : returnType)(
             unwrapApiResponse(data)
           )
