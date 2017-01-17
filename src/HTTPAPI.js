@@ -13,12 +13,12 @@ const warn = message => {
 
 const matchDateTime = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d{3}Z)?$/;
 const DateTime = {
-  test: v => matchDateTime.exec(v) ? v : false,
+  test: v => Boolean(matchDateTime.exec(v)),
   parse: v => new Date(v)
 };
 
 const LocalDate = {
-  test: v => _LocalDate.test(v) ? v : null,
+  test: _LocalDate.test,
   parse: v => new _LocalDate(v)
 };
 
