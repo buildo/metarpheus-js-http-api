@@ -36,13 +36,13 @@ export default function HTTPAPI({
   parseError = err => {
     const { errors = [] } = (() => {
       try {
-        return JSON.parse(err.data);
+        return JSON.parse(err.response.data);
       } catch (e) {
         return {};
       }
     })();
 
-    return { status: err.status, errors };
+    return { status: err.response.status, errors };
   }
 
 }) {
