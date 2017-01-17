@@ -1,5 +1,5 @@
 {
-  "name": "metarpheus-http-api",
+  "name": "metarpheus-js-http-api",
   "version": "0.1.1",
   "description": "metarpheus-based HTTPAPI",
   "main": "index.js",
