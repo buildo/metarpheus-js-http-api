@@ -12,6 +12,10 @@
     "prepublish": "npm run build",
     "release-version": "smooth-release"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:buildo/metarpheus-js-http-api"
+  },
   "keywords": [
     "metarpheus",
     "js",
@@ -20,7 +24,10 @@
     "http"
   ],
   "author": "Giovanni Gonzaga <giovanni@buildo.io>",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buildo/metarpheus-js-http-api/issues"
+  },
   "dependencies": {
     "axios": "^0.15.3",
     "local-date": "^2.0.0",
