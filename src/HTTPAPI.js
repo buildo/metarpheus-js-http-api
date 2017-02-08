@@ -34,15 +34,12 @@ export default function HTTPAPI({
   parsers = [LocalDate, DateTime],
 
   parseError = err => {
-    const { errors = [] } = (() => {
-      try {
-        return JSON.parse(err.response.data);
-      } catch (e) {
-        return {};
-      }
-    })();
-
-    return { status: err.response.status, errors };
+    try {
+      const { errors = [] } = JSON.parse(err.response.data);
+      return { status: err.response.status, errors };
+    } catch (e) {
+      return { status: err && err.response && err.response.status || 0, errors: [] };
+    }
   }
 
 }) {
