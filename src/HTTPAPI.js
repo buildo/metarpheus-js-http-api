@@ -101,10 +101,11 @@ export default function HTTPAPI({
         )}`;
 
         if (process.env.NODE_ENV !== 'production' && bodyParamType) {
-          t.assert(
-            bodyParamType(data),
-            `HTTPAPI: Invalid \`data\` (body) provided for ${method} ${url}`
-          );
+          try {
+            bodyParamType(data); // manually try/catching since bodyParamType could easily be a Struct
+          } catch (e) {
+            throw new TypeError(`HTTPAPI: Invalid \`data\` (body) provided for ${method} ${url}`);
+          }
         }
 
         if (process.env.NODE_ENV !== 'production' && data && !bodyParamType) {
