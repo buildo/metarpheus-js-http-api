@@ -75,7 +75,7 @@ export default function HTTPAPI({
       impl: ({
         token = null,
         params: urlParams = [],
-        data = {},
+        data,
         query: queryParams = {}
       } = {}) => {
         if (process.env.NODE_ENV !== 'production') {
@@ -96,16 +96,22 @@ export default function HTTPAPI({
           });
         }
 
-        if (process.env.NODE_ENV !== 'production' && bodyParamType) {
-          t.assert(
-            bodyParamType(data),
-            `HTTPAPI: Invalid \`data\` (body) provided to ${methodName}`
-          );
-        }
-
         const url = `${apiEndpoint}/${route(
           ...urlParams/*.map(stringifyParam)*/.map(encodeURIComponent)
         )}`;
+
+        if (process.env.NODE_ENV !== 'production' && bodyParamType) {
+          t.assert(
+            bodyParamType(data),
+            `HTTPAPI: Invalid \`data\` (body) provided for ${method} ${url}`
+          );
+        }
+
+        if (process.env.NODE_ENV !== 'production' && data && !bodyParamType) {
+          warn(
+            `Passing data (body) to ${method} ${url} but metarpheus doesn't specify a body type`
+          );
+        }
 
         const headers = {};
 

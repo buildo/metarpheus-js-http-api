@@ -35,7 +35,8 @@ export default [
     authenticated: true,
     returnType: t.Any,
     route: (...routeParams) => ['foos'].join('/'),
-    params: {}
+    params: {},
+    body: t.struct({ foo: t.String })
   },
   {
     method: 'post',
@@ -43,7 +44,6 @@ export default [
     authenticated: true,
     returnType: t.Any,
     route: (...routeParams) => ['foos2'].join('/'),
-    params: {},
-    body: t.struct({ foo: t.String })
+    params: {}
   },
 ];
