@@ -3,10 +3,8 @@ import axios from 'axios';
 import t from 'tcomb';
 import _LocalDate from 'local-date';
 
-const __DEV = process.env.NODE_ENV !== 'production';
-
 const warn = message => {
-  if (__DEV) {
+  if (process.env.NODE_ENV !== 'production') {
     console.warn(`HTTPAPI: ${message}`); // eslint-disable-line no-console
   }
 };
@@ -80,7 +78,7 @@ export default function HTTPAPI({
         data = {},
         query: queryParams = {}
       } = {}) => {
-        if (__DEV) {
+        if (process.env.NODE_ENV !== 'production') {
           urlParams.forEach((p, i) => {
             t.assert(
               routeParamTypes[i].is(p),
@@ -89,7 +87,7 @@ export default function HTTPAPI({
           });
         }
 
-        if (__DEV) {
+        if (process.env.NODE_ENV !== 'production') {
           Object.keys(queryParamTypes).forEach(k => {
             t.assert(
               queryParamTypes[k].is(queryParams[k]),
@@ -98,7 +96,7 @@ export default function HTTPAPI({
           });
         }
 
-        if (__DEV && bodyParamType) {
+        if (process.env.NODE_ENV !== 'production' && bodyParamType) {
           t.assert(
             bodyParamType(data),
             `HTTPAPI: Invalid \`data\` (body) provided to ${methodName}`
@@ -121,7 +119,7 @@ export default function HTTPAPI({
           headers['Cache-Control'] = 'no-cache, no-store';
         }
 
-        if (__DEV && authenticated && !token) {
+        if (process.env.NODE_ENV !== 'production' && authenticated && !token) {
           warn(`No token provided for authenticated ${method} ${url}`);
         }
 
