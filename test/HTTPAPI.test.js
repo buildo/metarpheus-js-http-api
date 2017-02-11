@@ -51,7 +51,17 @@ describe('HTTPAPI', () => {
   });
 
   it('should throw if invoked with malformed/missing data (body)', () => {
-    expect(() => getApi().fooController_addFoos2({})).toThrow();
+    expect(() => getApi().fooController_addFoos({})).toThrow();
+  });
+
+  it('should log a warning if passing data (body) to an api with untyped data', () => {
+    return expectToWarn(
+      () => {
+        getApi().fooController_addFoos2({ token: 'token', data: { foo: 'bar' } }).catch(() => {});
+        return Promise.resolve();
+      },
+      'HTTPAPI: Passing data (body) to post http://www.example.com/foos2 but metarpheus doesn\'t specify a body type' // eslint-disable-line max-len
+    );
   });
 
   it('should fail if api returns an incorrect response', () => {
@@ -97,13 +107,13 @@ describe('HTTPAPI', () => {
         'Content-Type': 'application/json'
       }
     }).post('/foos').reply(200, { data: {} });
-    return getApi().fooController_addFoos({ token: 'asd', data: {} });
+    return getApi().fooController_addFoos({ token: 'asd', data: { foo: 'bar' } });
   });
 
   xit('should warn if api returns non-gzipped content', () => {
     nock(apiEndpoint).post('/foos').reply(200, { data: {} });
     return expectToWarn(
-      () => getApi().fooController_addFoos({ token: 'asd', data: {} }),
+      () => getApi().fooController_addFoos({ token: 'asd', data: { foo: 'bar' } }),
       'asd'
     );
   });
