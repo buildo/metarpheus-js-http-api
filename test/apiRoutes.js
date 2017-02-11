@@ -37,4 +37,13 @@ export default [
     route: (...routeParams) => ['foos'].join('/'),
     params: {}
   },
+  {
+    method: 'post',
+    name: ['fooController', 'addFoos2'],
+    authenticated: true,
+    returnType: t.Any,
+    route: (...routeParams) => ['foos2'].join('/'),
+    params: {},
+    body: t.struct({ foo: t.String })
+  },
 ];

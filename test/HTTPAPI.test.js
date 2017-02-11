@@ -50,6 +50,10 @@ describe('HTTPAPI', () => {
     expect(() => getApi().fooController_getById({})).toThrow();
   });
 
+  it('should throw if invoked with malformed/missing data (body)', () => {
+    expect(() => getApi().fooController_addFoos2({})).toThrow();
+  });
+
   it('should fail if api returns an incorrect response', () => {
     nock(apiEndpoint).get('/foos?bar=asd').reply(200, { data: 'invalid' });
     return getApi().fooController_foos({ token: 'asd', query: { bar: 'asd' } }).then(

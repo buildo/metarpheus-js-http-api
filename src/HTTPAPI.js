@@ -67,6 +67,7 @@ export default function HTTPAPI({
     route,
     routeParamTypes,
     params: queryParamTypes,
+    body: bodyParamType,
     returnType,
     authenticated
   }) => {
@@ -95,6 +96,13 @@ export default function HTTPAPI({
               `HTTPAPI: Invalid query param ${k}=${queryParams[k]} provided to ${methodName}`
             );
           });
+        }
+
+        if (__DEV && bodyParamType) {
+          t.assert(
+            bodyParamType(data),
+            `HTTPAPI: Invalid \`data\` (body) provided to ${methodName}`
+          );
         }
 
         const url = `${apiEndpoint}/${route(
