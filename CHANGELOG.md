@@ -2,6 +2,13 @@
 
 
 
+## [v0.1.4](https://github.com/buildo/metarpheus-js-http-api/tree/v0.1.4) (2017-02-11)
+[Full Changelog](https://github.com/buildo/metarpheus-js-http-api/compare/v0.1.3...v0.1.4)
+
+#### New features:
+
+- typecheck request body [#14](https://github.com/buildo/metarpheus-js-http-api/issues/14)
+
 ## [v0.1.3](https://github.com/buildo/metarpheus-js-http-api/tree/v0.1.3) (2017-02-08)
 [Full Changelog](https://github.com/buildo/metarpheus-js-http-api/compare/v0.1.2...v0.1.3)
 
