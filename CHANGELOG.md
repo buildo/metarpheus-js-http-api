@@ -2,6 +2,19 @@
 
 
 
+## [v0.1.5](https://github.com/buildo/metarpheus-js-http-api/tree/v0.1.5) (2017-02-13)
+[Full Changelog](https://github.com/buildo/metarpheus-js-http-api/compare/v0.1.4...v0.1.5)
+
+#### Fixes (bugs & defects):
+
+- `npm test` hangs [#22](https://github.com/buildo/metarpheus-js-http-api/issues/22)
+- avoid false positive with Structs as body type [#20](https://github.com/buildo/metarpheus-js-http-api/issues/20)
+- js-minifier-friendly envify [#16](https://github.com/buildo/metarpheus-js-http-api/issues/16)
+
+#### New features:
+
+- warn when passing data (body) to an api but no metarpheus typing is available for it [#18](https://github.com/buildo/metarpheus-js-http-api/issues/18)
+
 ## [v0.1.4](https://github.com/buildo/metarpheus-js-http-api/tree/v0.1.4) (2017-02-11)
 [Full Changelog](https://github.com/buildo/metarpheus-js-http-api/compare/v0.1.3...v0.1.4)
 
