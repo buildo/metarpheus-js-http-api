@@ -1,6 +1,6 @@
 {
   "name": "metarpheus-js-http-api",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "metarpheus-based HTTPAPI",
   "main": "index.js",
   "scripts": {
