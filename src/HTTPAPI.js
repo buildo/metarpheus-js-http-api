@@ -100,18 +100,18 @@ export default function HTTPAPI({
           ...urlParams/*.map(stringifyParam)*/.map(encodeURIComponent)
         )}`;
 
+        if (process.env.NODE_ENV !== 'production' && data && !bodyParamType) {
+          warn(
+            `Passing data (body) to ${method} ${url} but metarpheus doesn't specify a body type`
+          );
+        }
+
         if (process.env.NODE_ENV !== 'production' && bodyParamType) {
           try {
             bodyParamType(data); // manually try/catching since bodyParamType could easily be a Struct
           } catch (e) {
             throw new TypeError(`HTTPAPI: Invalid \`data\` (body) provided for ${method} ${url}`);
           }
-        }
-
-        if (process.env.NODE_ENV !== 'production' && data && !bodyParamType) {
-          warn(
-            `Passing data (body) to ${method} ${url} but metarpheus doesn't specify a body type`
-          );
         }
 
         const headers = {};

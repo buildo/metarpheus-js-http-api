@@ -55,11 +55,9 @@ describe('HTTPAPI', () => {
   });
 
   it('should log a warning if passing data (body) to an api with untyped data', () => {
+    nock(apiEndpoint).post('/foos2').reply(200, {});
     return expectToWarn(
-      () => {
-        getApi().fooController_addFoos2({ token: 'token', data: { foo: 'bar' } }).catch(() => {});
-        return Promise.resolve();
-      },
+      () => getApi().fooController_addFoos2({ token: 'token', data: { foo: 'bar' } }),
       'HTTPAPI: Passing data (body) to post http://www.example.com/foos2 but metarpheus doesn\'t specify a body type' // eslint-disable-line max-len
     );
   });
