@@ -101,7 +101,7 @@ export default function HTTPAPI({
         }
 
         const url = `${apiEndpoint}/${route(
-          ...urlParams/*.map(stringifyParam)*/.map(encodeURIComponent)
+          ...urlParams/* .map(stringifyParam) */.map(encodeURIComponent)
         )}`;
 
         const headers = {};
