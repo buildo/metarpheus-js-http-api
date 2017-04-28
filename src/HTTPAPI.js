@@ -97,7 +97,7 @@ export default function HTTPAPI({
         }
 
         const url = `${apiEndpoint}/${route(
-          ...urlParams/*.map(stringifyParam)*/.map(encodeURIComponent)
+          ...urlParams/* .map(stringifyParam) */.map(encodeURIComponent)
         )}`;
 
         if (process.env.NODE_ENV !== 'production' && data && !bodyParamType) {
