@@ -80,9 +80,12 @@ export default function HTTPAPI({
       } = {}) => {
         if (process.env.NODE_ENV !== 'production') {
           urlParams.forEach((p, i) => {
+            const routeParamObj = routeParamTypes[i];
+            const routeParamName = Object.keys(routeParamObj)[0];
+            const routeParamType = routeParamObj[routeParamName];
             t.assert(
-              routeParamTypes[i].is(p),
-              `HTTPAPI: Invalid path  param[${i}]=${p} provided to ${methodName}`
+              routeParamType.is(p),
+              `HTTPAPI: Invalid path param[${i}]=${p} provided to ${methodName}`
             );
           });
         }
