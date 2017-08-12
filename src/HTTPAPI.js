@@ -85,7 +85,7 @@ export default function HTTPAPI({
             const routeParamType = routeParamObj[routeParamName];
             t.assert(
               routeParamType.is(p),
-              `HTTPAPI: Invalid path param[${i}]=${p} provided to ${methodName}`
+              `HTTPAPI: Invalid path param ${routeParamName}=${p} provided to ${methodName}`
             );
           });
         }
